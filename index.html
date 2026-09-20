@@ -4,305 +4,297 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MindRoot — Live demo for Smart India Hackathon 2026</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2312505E'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23F2E1B6' font-family='sans-serif'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23177283'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23FBF3DC' font-family='sans-serif'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Noto+Sans+Devanagari:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
 /* ------------------------------------------------------------------
-   Design: "dhyan-demo" by BinaryBros. River ink, gamosa red, muga gold.
-   Brand: MindRoot. The phone runs the real MindRoot web build.
+   MindRoot demo — two phases:
+     overview  : airy project intro, phone peeking on the right
+     demo      : phone glides LEFT (FLIP), context panel takes over the right,
+                 big animated arrows flow from the notes toward the phone.
+   Light-only palette on purpose: evaluators on dark-mode OSes were landing
+   on the dark theme and the page read as cluttered at first glance.
 ------------------------------------------------------------------- */
 :root{
   box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-
-  --bg:#E9EFEC;
-  --panel:#F6F9F7;
-  --tint:#DBE7E3;
-  --ink:#0F2A33;
-  --muted:#4A5F67;
-  --line:#C2D2CD;
-  --red:#B42318;
-  --gold:#C98F1F;
-  --gold-soft:#F2E1B6;
-  --gold-ink:#4A3200;
-  --river:#12505E;
+  --bg:#F6FAF8;
+  --panel:#FFFFFF;
+  --tint:#E7F0EC;
+  --ink:#14333D;
+  --muted:#5B7280;
+  --line:#DCE7E2;
+  --red:#C0392B;
+  --gold:#D9A23B;
+  --gold-soft:#FBF3DC;
+  --gold-ink:#5A4210;
+  --river:#177283;
   --on-river:#FFFFFF;
-  --glow:rgba(201,143,31,.22);
+  --glow:rgba(217,162,59,.20);
+  --shadow:0 24px 48px -24px rgba(23,51,61,.25);
 
   --display:'Bricolage Grotesque','Atkinson Hyperlegible',system-ui,sans-serif;
   --body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
 
-  --weave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Crect width='28' height='14' fill='%23B42318'/%3E%3Cpath d='M14 1L21 7L14 13L7 7Z' fill='none' stroke='%23F4E3B0' stroke-width='1.6'/%3E%3Cpath d='M14 4.5L17.5 7L14 9.5L10.5 7Z' fill='%23E0A93B'/%3E%3Cpath d='M0 .5h28M0 13.5h28' stroke='%23F4E3B0' stroke-width='1'/%3E%3C/svg%3E");
+  --weave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Crect width='28' height='14' fill='%23C0392B'/%3E%3Cpath d='M14 1L21 7L14 13L7 7Z' fill='none' stroke='%23F6E7C6' stroke-width='1.6'/%3E%3Cpath d='M14 4.5L17.5 7L14 9.5L10.5 7Z' fill='%23E9C36B'/%3E%3Cpath d='M0 .5h28M0 13.5h28' stroke='%23F6E7C6' stroke-width='1'/%3E%3C/svg%3E");
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0B1A1F; --panel:#11262D; --tint:#173540; --ink:#E6EFEC; --muted:#93AAB0; --line:#25444E;
-    --red:#F0705F; --gold:#E2B04A; --gold-soft:#3A2F12; --gold-ink:#F2D48A;
-    --river:#5CC0D0; --on-river:#08181D; --glow:rgba(226,176,74,.16);
-  }
-}
-
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1;letter-spacing:-.01em}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.12;letter-spacing:-.01em}
 p{margin:0}
 a{color:inherit}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
 
-.weave{height:14px;background:var(--weave) repeat-x;background-size:28px 14px}
+.weave{height:10px;background:var(--weave) repeat-x;background-size:28px 10px}
 
 /* ------------------------------ header ------------------------------ */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top-in{max-width:1360px;margin:0 auto;padding:12px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{display:flex;align-items:baseline;gap:12px;text-decoration:none}
-.logo .mark{width:34px;height:34px;border-radius:50%;background:var(--tint);display:inline-flex;align-items:center;justify-content:center;font-size:19px;align-self:center}
-.logo .latin{font:800 22px/1 var(--display);letter-spacing:.02em;color:var(--red)}
-.logo .tag{font:600 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.top{position:sticky;top:0;z-index:20;background:rgba(246,250,248,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1360px;margin:0 auto;padding:10px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo .mark{width:32px;height:32px;border-radius:50%;background:var(--tint);display:inline-flex;align-items:center;justify-content:center;font-size:17px}
+.logo .latin{font:800 20px/1 var(--display);letter-spacing:.02em;color:var(--red)}
+.logo .tag{font:600 11.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .top nav{display:flex;gap:6px}
-.top nav a{text-decoration:none;font-weight:700;font-size:15px;padding:8px 14px;border-radius:999px}
+.top nav a{text-decoration:none;font-weight:700;font-size:14.5px;padding:7px 13px;border-radius:999px}
 .top nav a:hover{background:var(--tint)}
-@media (max-width:640px){.top nav a:not(:first-child){display:none}}
+#navOverview{display:none}
+body.mode-demo #navOverview{display:inline-block}
+body.mode-demo #navDemo{display:none}
+@media (max-width:640px){.top nav a:not(:first-child){display:none}body.mode-demo .top nav a:first-child{display:inline-block}}
 
-/* ------------------------------ demo grid ------------------------------ */
-.demo{
-  max-width:1360px;margin:0 auto;padding:40px clamp(20px,4vw,48px) 88px;
-  display:grid;column-gap:clamp(28px,4.5vw,72px);row-gap:36px;
-  grid-template-columns:minmax(0,1fr) auto minmax(0,.82fr);
-  grid-template-areas:"intro phone notes" "steps phone notes";
-  grid-template-rows:auto 1fr;
+/* ------------------------------ stage grid ------------------------------ */
+.stagegrid{
+  max-width:1360px;margin:0 auto;padding:36px clamp(20px,4vw,48px) 72px;
+  display:grid;column-gap:clamp(28px,4vw,64px);row-gap:32px;align-items:center;
+  grid-template-columns:minmax(0,1.05fr) auto;
+  grid-template-areas:"intro phone";
 }
-.intro{grid-area:intro}
-.steps-wrap{grid-area:steps}
+body.mode-demo .stagegrid{
+  grid-template-columns:auto minmax(0,.92fr);
+  grid-template-areas:"phone context";
+  align-items:start;
+}
+.intro{grid-area:intro;transition:opacity .45s ease,transform .45s ease}
 .col-phone{grid-area:phone}
-.notes{grid-area:notes}
-@media (max-width:1120px){
-  .demo{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "phone" "steps" "notes";grid-template-rows:auto;justify-items:stretch}
-  .col-phone{justify-self:center}
+.context{grid-area:context;transition:opacity .5s ease .12s,transform .5s ease .12s}
+
+/* overview: context hidden */
+body.mode-overview .context{opacity:0;transform:translateX(28px);pointer-events:none;visibility:hidden}
+/* demo: intro gone */
+body.mode-demo .intro{opacity:0;transform:translateY(-14px);pointer-events:none;position:static;max-height:0;overflow:hidden;padding:0;margin:0;visibility:hidden}
+/* arrows only in demo */
+.flow{opacity:0;transition:opacity .5s ease .3s}
+body.mode-demo .flow{opacity:1}
+
+@media (max-width:1020px){
+  .stagegrid,body.mode-demo .stagegrid{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:"intro" "phone" "context";
+    justify-items:center;
+  }
+  body.mode-demo .intro{display:none}
+  .flow{display:none}
 }
 
-.intro h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;max-width:14ch}
-.intro .lede{margin-top:18px;font-size:19px;max-width:46ch;color:var(--muted)}
-.facts{margin-top:22px;display:flex;flex-wrap:wrap;gap:0;list-style:none;padding:0;font-size:15px;font-weight:700}
-.facts li{padding:2px 16px 2px 0;margin-right:16px;border-right:1.5px solid var(--line)}
-.facts li:last-child{border-right:0;margin-right:0}
-
-/* ------------------------------ steps on a thread ------------------------------ */
-.steps-title{font-size:15px;font-weight:700;color:var(--muted);margin-bottom:14px}
-.steps{list-style:none;margin:0;padding:0}
-.steps li{position:relative;padding-left:66px}
-.steps li::before{content:"";position:absolute;left:21px;top:48px;bottom:-4px;border-left:2px dashed var(--red);opacity:.6}
-.steps li.done::before{border-left-style:solid;opacity:1}
-.steps li:last-child::before{display:none}
-.step{display:block;width:100%;background:none;border:0;padding:8px 8px 22px 0;text-align:left;cursor:pointer}
-.num{position:absolute;left:0;top:6px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:800 19px/1 var(--display);background:var(--bg);border:2px solid var(--red);color:var(--red);transition:background .2s,color .2s,transform .2s}
-.step h3{font-size:21px;font-weight:600;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
-.step h3 small{font:400 14px var(--body);color:var(--muted)}
-.step p{margin-top:6px;color:var(--muted);max-width:52ch}
-.tap{display:inline-block;margin-top:10px;font-size:15px;font-weight:700;background:var(--tint);padding:4px 12px;border-radius:8px}
-.steps li.active .num{background:var(--gold);border-color:var(--gold);color:#241800;transform:scale(1.08)}
-.steps li.active h3{color:var(--river)}
-.steps li.active p{color:var(--ink)}
-.steps li.active .tap{background:var(--gold-soft);color:var(--gold-ink)}
-.steps li.done .num{background:var(--red);color:#fff}
-.steps li.done h3,.steps li.done p{opacity:.72}
-
-/* ------------------------------ notes ------------------------------ */
-.notes h2{font-size:26px;font-weight:600;margin-bottom:6px}
-.note{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
-.note:first-of-type{margin-top:16px}
-.note .ic{width:44px;height:44px;border-radius:12px;background:var(--tint);display:grid;place-items:center;color:var(--river)}
-.note h3{font-size:19px;font-weight:600;margin-bottom:4px}
-.note p{color:var(--muted);font-size:16px}
-.sample{margin-top:8px;padding:16px 18px;border-radius:4px 16px 4px 16px;background:var(--gold-soft);color:var(--gold-ink);font-size:15.5px;border-left:5px solid var(--gold)}
-.sample b{display:block;margin-bottom:2px}
-
-/* live "you're looking at" card — follows the screen shown in the phone */
-.live{margin-top:16px;padding:16px 18px;border-radius:4px 16px 4px 16px;background:var(--gold-soft);color:var(--gold-ink);border-left:5px solid var(--gold)}
-.live .live-kicker{font:700 12.5px var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.75;margin-bottom:4px}
-.live h3{font-size:19px;margin-bottom:4px}
-.live p{font-size:15.5px;line-height:1.5}
-.live.flash{animation:liveflash .5s ease}
-@keyframes liveflash{0%{transform:scale(.985)}60%{transform:scale(1.008)}100%{transform:scale(1)}}
+/* ------------------------------ overview intro ------------------------------ */
+.intro .kicker{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:700;color:var(--muted);letter-spacing:.03em}
+.intro h1{font-size:clamp(40px,4.8vw,62px);font-weight:800;max-width:13ch;margin-top:18px}
+.intro h1 em{font-style:normal;color:var(--river)}
+.intro .lede{margin-top:16px;font-size:18.5px;max-width:48ch;color:var(--muted)}
+.values{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px}
+@media (max-width:560px){.values{grid-template-columns:1fr}}
+.value{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px -6px rgba(23,51,61,.12)}
+.value .ic{flex:none;width:38px;height:38px;border-radius:12px;background:var(--tint);display:grid;place-items:center;font-size:19px}
+.value b{display:block;font-size:15.5px;line-height:1.3}
+.value span{display:block;font-size:13.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+.cta-row{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cta{
+  display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;
+  background:var(--river);color:var(--on-river);border-radius:999px;
+  padding:16px 30px;font:700 18px var(--body);
+  box-shadow:0 14px 28px -12px rgba(23,114,131,.55);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 18px 32px -12px rgba(23,114,131,.6)}
+.cta:active{transform:translateY(0) scale(.98)}
+.cta .arr{transition:transform .2s ease}
+.cta:hover .arr{transform:translateX(4px)}
+.intro .fine{font-size:14px;color:var(--muted)}
+.intro .fine a{color:var(--river);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
 /* ------------------------------ phone ------------------------------ */
 .col-phone{
-  --sh:clamp(470px,min(calc(100dvh - 210px),calc((100vw - 56px)*2.164)),800px);
+  --sh:clamp(470px,min(calc(100dvh - 190px),calc((100vw - 56px)*2.164)),780px);
   width:calc(var(--sh)*390/844 + 24px);
-  position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);align-self:start;
+  position:sticky;top:78px;align-self:start;
 }
-@media (max-width:1120px){.col-phone{position:static}}
+body.mode-overview .col-phone{position:relative;top:0}
+@media (max-width:1020px){.col-phone{position:relative!important;top:0}}
 .stage{position:relative;padding:8px 0}
 .stage::before{content:"";position:absolute;inset:-6% -34% -6% -34%;z-index:-1;background:radial-gradient(closest-side,var(--glow),transparent 72%)}
 .phone{
   position:relative;padding:12px;border-radius:58px;
-  background:linear-gradient(150deg,#41504F 0%,#111817 38%,#26312F 100%);
-  box-shadow:inset 0 0 0 1.5px #6B7C7A,0 46px 70px -34px rgba(6,25,30,.65),0 16px 26px -16px rgba(0,0,0,.5);
+  background:linear-gradient(150deg,#4a5a58 0%,#141c1b 38%,#2a3634 100%);
+  box-shadow:inset 0 0 0 1.5px #748784,var(--shadow),0 16px 26px -16px rgba(0,0,0,.5);
 }
-.phone .b{position:absolute;width:4px;background:#26312F;border-radius:2px}
+.phone .b{position:absolute;width:4px;background:#2a3634;border-radius:2px}
 .phone .b1{left:-3px;top:15%;height:5%}
 .phone .b2{left:-3px;top:23%;height:9%}
 .phone .b3{left:-3px;top:34%;height:9%}
 .phone .b4{right:-3px;top:27%;height:14%}
 .screen{position:relative;width:calc(var(--sh)*390/844);height:var(--sh);border-radius:46px;overflow:hidden;background:#F2F6F4;isolation:isolate}
 .screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 34%)}
-.island{position:absolute;z-index:7;top:1.3%;left:50%;transform:translateX(-50%);width:29%;height:4.1%;background:#050808;border-radius:999px;pointer-events:none}
-.homebar{position:absolute;z-index:7;bottom:1.1%;left:50%;transform:translateX(-50%);width:34%;height:.6%;min-height:4px;background:#0F2A33;border-radius:999px;opacity:.85;pointer-events:none}
 .viewport{position:absolute;top:0;left:0;width:390px;height:844px;transform-origin:0 0}
 .viewport iframe{display:block;width:390px;height:844px;border:0;background:#F2F6F4}
+/* No fake island/homebar: the REAL app draws from the iframe's very top. */
 
-.pager{margin-top:20px;display:flex;align-items:center;gap:12px}
-.pager .mid{flex:1;min-width:0;line-height:1.25}
-.pager .mid small{display:block;font-size:14px;color:var(--muted)}
-.pager .mid strong{font:600 17px var(--display);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.round{flex:none;width:46px;height:46px;border-radius:50%;border:2px solid var(--line);background:var(--panel);cursor:pointer;display:grid;place-items:center}
-.round:hover{border-color:var(--river)}
-.round:disabled{opacity:.4;cursor:default}
-.primary{flex:none;background:var(--river);color:var(--on-river);border:0;border-radius:999px;padding:12px 22px;font-weight:700;font-size:16px;cursor:pointer}
-.primary:hover{filter:brightness(1.08)}
-.utility{margin-top:12px;display:flex;gap:18px;font-size:14.5px}
+.utility{margin-top:14px;display:flex;gap:18px;justify-content:center;font-size:14.5px;flex-wrap:wrap}
 .utility button,.utility a{background:none;border:0;padding:4px 0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .utility button:hover,.utility a:hover{color:var(--ink)}
 
+/* ------------------------------ flow arrows (desc → phone) ------------------------------ */
+.flow{grid-area:context;justify-self:start;align-self:center;display:flex;flex-direction:column;gap:10px;margin-right:6px}
+.flow .fl{width:64px;height:26px;opacity:.25;transform:translateX(10px);animation:flowleft 1.5s ease-in-out infinite}
+.flow .fl:nth-child(2){animation-delay:.22s}
+.flow .fl:nth-child(3){animation-delay:.44s}
+@keyframes flowleft{
+  0%{opacity:.15;transform:translateX(14px)}
+  45%{opacity:1;transform:translateX(0)}
+  100%{opacity:.15;transform:translateX(-12px)}
+}
+.flow .cap{font:700 12.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+
+/* ------------------------------ context panel ------------------------------ */
+.context h2{font-size:24px;font-weight:600}
+.live{margin-top:14px;padding:20px 22px;border-radius:6px 20px 6px 20px;background:var(--gold-soft);color:var(--gold-ink);border-left:6px solid var(--gold);box-shadow:0 10px 24px -16px rgba(90,66,16,.5)}
+.live .live-kicker{font:700 12.5px var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.75;margin-bottom:5px}
+.live h3{font-size:22px;margin-bottom:5px}
+.live p{font-size:16.5px;line-height:1.55}
+.live.flash{animation:liveflash .5s ease}
+@keyframes liveflash{0%{transform:scale(.985)}60%{transform:scale(1.01)}100%{transform:scale(1)}}
+
+.notes{margin-top:8px}
+.note{display:grid;grid-template-columns:40px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.note .ic{width:40px;height:40px;border-radius:12px;background:var(--tint);display:grid;place-items:center;color:var(--river)}
+.note h3{font-size:16.5px;font-weight:600;margin-bottom:2px}
+.note p{color:var(--muted);font-size:14.5px;line-height:1.45}
+.sample{margin-top:10px;padding:13px 16px;border-radius:4px 14px 4px 14px;background:var(--tint);color:var(--ink);font-size:14px;border-left:5px solid var(--river)}
+.sample b{display:block;margin-bottom:2px}
+
 /* ------------------------------ coverage ------------------------------ */
-.band{border-top:1px solid var(--line)}
-.wrap{max-width:1360px;margin:0 auto;padding:84px clamp(20px,4vw,48px)}
-.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
-.sec-head h2{font-size:clamp(28px,3.2vw,40px);font-weight:600;max-width:22ch}
+.band{border-top:1px solid var(--line);background:var(--panel)}
+.wrap{max-width:1360px;margin:0 auto;padding:72px clamp(20px,4vw,48px)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.sec-head h2{font-size:clamp(26px,3vw,36px);font-weight:600;max-width:24ch}
 .sec-head p{color:var(--muted);max-width:44ch}
-.cov-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) 168px;gap:8px 32px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.cov-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) 168px;gap:8px 32px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
 .cov-row:last-child{border-bottom:1px solid var(--line)}
-.cov-row h3{font-size:19px;font-weight:600}
-.cov-row p{color:var(--muted);font-size:16px}
-.chip{justify-self:start;font-size:14px;font-weight:700;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.cov-row h3{font-size:18px;font-weight:600}
+.cov-row p{color:var(--muted);font-size:15.5px}
+.chip{justify-self:start;font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;white-space:nowrap}
 .chip.live{background:var(--river);color:var(--on-river)}
 .chip.app{background:var(--gold-soft);color:var(--gold-ink)}
 @media (max-width:760px){.cov-row{grid-template-columns:1fr}}
 
-footer{border-top:0}
-footer .foot{max-width:1360px;margin:0 auto;padding:28px clamp(20px,4vw,48px) 36px;color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px}
+footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34px;color:var(--muted);font-size:14.5px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .flow{display:none}
 }
 </style>
 </head>
-<body>
+<body class="mode-overview">
 
 <div class="weave" aria-hidden="true"></div>
 
 <header class="top">
   <div class="top-in">
-    <a class="logo" href="#demo" aria-label="MindRoot home">
+    <a class="logo" href="#top" aria-label="MindRoot home">
       <span class="mark" aria-hidden="true">🌿</span>
       <span class="latin">MindRoot</span>
       <span class="tag">With you. Always.</span>
     </a>
     <nav aria-label="Page sections">
-      <a href="#demo">Live demo</a>
+      <a href="#top" id="navOverview">Overview</a>
+      <a href="#demo" id="navDemo">Live demo</a>
       <a href="#coverage">Coverage</a>
     </nav>
   </div>
 </header>
 
-<main>
-<section class="demo" id="demo">
+<main id="top">
+<section class="stagegrid" id="demo">
 
   <div class="intro">
-    <h1>Try MindRoot in two minutes.</h1>
-    <p class="lede">A memory-care companion for older adults living with dementia, and a dashboard for the family looking after them. Built for North East India. The phone in the middle is the real app — the same code that ships as the offline Android APK. Tap it.</p>
-    <ul class="facts">
-      <li>About 2 minutes</li>
-      <li>Best on a laptop</li>
-      <li>No sign-up needed</li>
-    </ul>
+    <span class="kicker">Smart India Hackathon 2026 · PS SIH26003 · MDoNER</span>
+    <h1>Dementia care that <em>never leaves the phone.</em></h1>
+    <p class="lede">MindRoot is a memory-care companion for older adults in North East India — culturally familiar games, an on-device AI that notices decline early, and every instruction spoken in the family's own voice.</p>
+
+    <div class="values">
+      <div class="value"><span class="ic">🧠</span><div><b>8 measured domains</b><span>7 adaptive games + the Evening Echo check-in</span></div></div>
+      <div class="value"><span class="ic">📶</span><div><b>100% offline</b><span>One APK. No server, no account, no internet needed</span></div></div>
+      <div class="value"><span class="ic">🗣️</span><div><b>The family's voice</b><span>Recorded in-app; the app speaks 5 languages</span></div></div>
+      <div class="value"><span class="ic">🤖</span><div><b>On-device AI</b><span>ONNX models score sessions right on the phone</span></div></div>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta" id="startDemo" type="button">Start the live demo <span class="arr">→</span></button>
+      <span class="fine">~2 minutes · the phone shows the <a href="#coverage">real app</a>, no sign-up</span>
+    </div>
   </div>
 
-  <div class="steps-wrap">
-    <p class="steps-title">Follow these four steps. Use the Next button under the phone if you like.</p>
-    <ol class="steps" id="steps">
-      <li data-i="0"><button class="step" type="button">
-        <span class="num" aria-hidden="true">1</span>
-        <h3>Start as the patient <small>20 seconds</small></h3>
-        <p>You land on the welcome screen. The demo skips voice recording so you can explore straight away — the real setup takes about three minutes.</p>
-        <span class="tap">Tap “Just exploring? Skip setup”</span>
-      </button></li>
-      <li data-i="1"><button class="step" type="button">
-        <span class="num" aria-hidden="true">2</span>
-        <h3>Play one session <small>60 seconds</small></h3>
-        <p>Three games, picked for the player. Every instruction is spoken aloud, there are no timers and no scores — on purpose.</p>
-        <span class="tap">Tap the big ▶ Play button</span>
-      </button></li>
-      <li data-i="2"><button class="step" type="button">
-        <span class="num" aria-hidden="true">3</span>
-        <h3>Open the caregiver hub <small>30 seconds</small></h3>
-        <p>Families unlock their view with a PIN. Two weeks of sample history is already seeded, so the trends are visible immediately.</p>
-        <span class="tap">Tap the caretaker icon · PIN is 1·2·3·4</span>
-      </button></li>
-      <li data-i="3"><button class="step" type="button">
-        <span class="num" aria-hidden="true">4</span>
-        <h3>Read the analysis <small>30 seconds</small></h3>
-        <p>An on-device AI model turns game results into trends, per-domain strengths and one gentle alert when something slips — plus a care co-pilot that answers questions in plain words.</p>
-        <span class="tap">Look at the trends, the alert, and the co-pilot</span>
-      </button></li>
-    </ol>
-  </div>
-
-  <div class="col-phone">
+  <div class="col-phone" id="phoneCol">
     <div class="stage">
       <div class="phone">
         <i class="b b1"></i><i class="b b2"></i><i class="b b3"></i><i class="b b4"></i>
         <div class="screen" id="screen">
-          <!-- No fake island/homebar: the REAL app draws from the iframe's very
-               top, and overlaid chrome collides with its header. -->
           <div class="viewport" id="viewport">
             <iframe id="appframe" title="MindRoot app demo" allow="autoplay; fullscreen; microphone" referrerpolicy="no-referrer"></iframe>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="pager" id="pager">
-      <button class="round" id="prev" type="button" aria-label="Previous step"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <div class="mid"><small id="pgLabel">Step 1 of 4</small><strong id="pgTitle">Start as the patient</strong></div>
-      <button class="primary" id="next" type="button">Next step</button>
-    </div>
-    <div class="utility">
-      <button type="button" id="reload">Restart the demo</button>
+    <div class="utility" id="utilityRow" hidden>
+      <button type="button" id="restart">Restart demo</button>
+      <button type="button" id="backToOverview">← Back to overview</button>
       <a id="fullscreen" href="./app/" target="_blank" rel="noopener">Open full screen</a>
     </div>
   </div>
 
-  <aside class="notes" aria-label="What to notice">
-    <h2>What to notice</h2>
+  <div class="context" id="contextCol">
+    <div class="flow-slot"></div>
+    <h2>What you're looking at</h2>
     <div class="live" id="liveCard">
-      <div class="live-kicker">You're looking at</div>
+      <div class="live-kicker">On the phone right now</div>
       <h3 id="liveTitle">The welcome screen</h3>
       <p id="liveNote">Setup takes about three minutes: language, a name, then the family records five short phrases. In a hurry? Tap “Just exploring? Skip setup” in the phone.</p>
     </div>
-    <div class="note">
-      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></span>
-      <div><h3>Built for older hands</h3><p>Large tap targets, high contrast and calm colours. No small buttons, no clutter.</p></div>
-    </div>
-    <div class="note">
-      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h4v-4h4v-4h4V7h4"/></svg></span>
-      <div><h3>Difficulty that adapts</h3><p>Five levels that rise and fall with accuracy, so games stay challenging without becoming frustrating.</p></div>
-    </div>
-    <div class="note">
-      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></span>
-      <div><h3>Caregivers see the trend</h3><p>Progress over time, a breakdown per domain, and a gentle alert when something is declining.</p></div>
-    </div>
-    <div class="note">
-      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
-      <div><h3>Made for the North East</h3><p>English, Hindi, Assamese, Bengali and Nepali — spoken aloud, guided by the family’s own recorded voice.</p></div>
+
+    <div class="notes">
+      <div class="note">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <div><h3>Built for older hands</h3><p>Large tap targets, high contrast, calm colours. No small buttons, no clutter.</p></div>
+      </div>
+      <div class="note">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h4v-4h4v-4h4V7h4"/></svg></span>
+        <div><h3>Difficulty that adapts</h3><p>Five levels that rise and fall with accuracy — challenging, never frustrating.</p></div>
+      </div>
+      <div class="note">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></span>
+        <div><h3>Caregivers see the trend</h3><p>Two weeks of sample history is seeded, so trends and alerts are visible immediately.</p></div>
+      </div>
+      <div class="note">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
+        <div><h3>Made for the North East</h3><p>English, Hindi, Assamese, Bengali and Nepali — spoken aloud, in the family's voice.</p></div>
+      </div>
     </div>
     <div class="sample"><b>Everything here is sample data.</b>No real patient information is used or stored in this demo.</div>
-  </aside>
+  </div>
 </section>
 
 <section class="band" id="coverage">
@@ -312,11 +304,11 @@ footer .foot{max-width:1360px;margin:0 auto;padding:28px clamp(20px,4vw,48px) 36
       <p>Smart India Hackathon 2026, Problem Statement SIH26003, Ministry of Development of North Eastern Region.</p>
     </div>
     <div class="cov">
-      <div class="cov-row"><h3>Interactive cognitive games</h3><p>Seven games covering memory, attention, pattern recognition, routine recall, reaction speed and matching — plus the Evening Echo daily check-in as an eighth measured domain.</p><span class="chip live">Live in step 2</span></div>
-      <div class="cov-row"><h3>Adaptive difficulty</h3><p>Five levels that adjust to accuracy. Each session picks the three games the player needs most.</p><span class="chip live">Live in step 2</span></div>
-      <div class="cov-row"><h3>Caregiver dashboard</h3><p>Trends, per-domain analysis and declining-performance alerts.</p><span class="chip live">Live in step 3</span></div>
-      <div class="cov-row"><h3>AI analysis</h3><p>On-device InceptionTime models (ONNX) read each session and return an overall state with per-domain insight — no server involved.</p><span class="chip live">Live in step 3</span></div>
-      <div class="cov-row"><h3>Reminders</h3><p>Medicine, hydration and appointment reminders scheduled on-device, announced in the family’s language.</p><span class="chip app">In the mobile app</span></div>
+      <div class="cov-row"><h3>Interactive cognitive games</h3><p>Seven games covering memory, attention, pattern recognition, routine recall, reaction speed and matching — plus the Evening Echo daily check-in as an eighth measured domain.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>Adaptive difficulty</h3><p>Five levels that adjust to accuracy. Each session picks the three games the player needs most.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>Caregiver dashboard</h3><p>Trends, per-domain analysis and declining-performance alerts.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>AI analysis</h3><p>On-device InceptionTime models (ONNX) read each session and return an overall state with per-domain insight — no server involved.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>Reminders</h3><p>Medicine, hydration and appointment reminders scheduled on-device, announced in the family's language.</p><span class="chip app">In the mobile app</span></div>
       <div class="cov-row"><h3>Voice input &amp; speech</h3><p>Ask the care co-pilot by voice — on-device speech recognition — and hear every reply spoken back.</p><span class="chip app">In the mobile app</span></div>
       <div class="cov-row"><h3>Elderly-friendly design</h3><p>Oversized controls, haptic feedback and spoken instructions on the device.</p><span class="chip app">In the mobile app</span></div>
       <div class="cov-row"><h3>Works offline</h3><p>All data is stored on the device first, so remote areas with weak signal are not left out. The shipped app is a single offline APK.</p><span class="chip app">In the mobile app</span></div>
@@ -343,9 +335,9 @@ const CONFIG = {
   TEAM_NAME: "BinaryBros · Team 136671"
 };
 
-const APP_W = 390, APP_H = 844;
+const APP_W = 390;
 const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ----------------------- scale the 390x844 app into the phone ----------------------- */
 const screenEl = $('#screen'), viewport = $('#viewport');
@@ -357,34 +349,66 @@ const frame = $('#appframe');
 frame.src = CONFIG.APP_URL;
 if (CONFIG.TEAM_NAME) $('#teamLine').textContent = 'Built by ' + CONFIG.TEAM_NAME;
 
-/* ----------------------- guided steps ----------------------- */
-const STEPS = ['Start as the patient', 'Play one session', 'Open the caregiver hub', 'Read the analysis'];
-const CHECK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-const items = $$('#steps li');
-let cur = 0;
-function setStep(i){
-  cur = Math.max(0, Math.min(STEPS.length - 1, i));
-  items.forEach((li, j) => {
-    li.classList.toggle('active', j === cur);
-    li.classList.toggle('done', j < cur);
-    $('.num', li).innerHTML = j < cur ? CHECK : String(j + 1);
-  });
-  $('#pgLabel').textContent = 'Step ' + (cur + 1) + ' of ' + STEPS.length;
-  $('#pgTitle').textContent = STEPS[cur];
-  $('#prev').disabled = cur === 0;
-  $('#next').textContent = cur === STEPS.length - 1 ? 'Start over' : 'Next step';
-}
-items.forEach((li, j) => $('.step', li).addEventListener('click', () => setStep(j)));
-$('#prev').addEventListener('click', () => setStep(cur - 1));
-$('#next').addEventListener('click', () => {
-  if (cur === STEPS.length - 1) { setStep(0); resetDemo(); } else setStep(cur + 1);
-});
-$('#reload').addEventListener('click', () => { resetDemo(); setStep(0); });
-setStep(0);
+/* ----------------------- two-phase layout ----------------------- */
+const body = document.body;
+const phoneCol = $('#phoneCol');
+const utilityRow = $('#utilityRow');
+let mode = 'overview';
 
-/* ------- live context: the app announces its screen; this rail explains it -------
-   (the app posts {type:'mindroot:screen', screen} to the parent on every route
-   change — web only; native is untouched) */
+function setMode(next){
+  if (next === mode) return;
+  const flip = () => {
+    const first = phoneCol.getBoundingClientRect();
+    body.classList.remove('mode-' + mode);
+    body.classList.add('mode-' + next);
+    mode = next;
+    utilityRow.hidden = next !== 'demo';
+    if (!REDUCED) {
+      const last = phoneCol.getBoundingClientRect();
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+      if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+        phoneCol.style.transition = 'none';
+        phoneCol.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+        requestAnimationFrame(() => {
+          phoneCol.style.transition = 'transform .75s cubic-bezier(.22,1,.36,1)';
+          phoneCol.style.transform = '';
+        });
+        phoneCol.addEventListener('transitionend', () => {
+          phoneCol.style.transition = '';
+        }, { once: true });
+      }
+    }
+    if (next === 'demo') {
+      $('#demo').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+    }
+  };
+  if (REDUCED) flip(); else requestAnimationFrame(flip);
+}
+$('#startDemo').addEventListener('click', () => setMode('demo'));
+$('#backToOverview').addEventListener('click', () => {
+  setMode('overview');
+  window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' });
+});
+$('#navDemo').addEventListener('click', (e) => { e.preventDefault(); setMode('demo'); });
+$('#navOverview').addEventListener('click', (e) => { e.preventDefault(); setMode('overview'); window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); });
+
+/* ------- big flow arrows: injected between context and phone ------- */
+(function arrows(){
+  const CHEV = '<svg class="fl" viewBox="0 0 64 26" fill="none" aria-hidden="true"><path d="M60 3L38 13L60 23" stroke="#177283" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 5L14 13L30 21" stroke="#177283" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/></svg>';
+  const wrap = document.createElement('div');
+  wrap.className = 'flow';
+  wrap.setAttribute('aria-hidden', 'true');
+  wrap.innerHTML = '<span class="cap">watch the phone</span>' + CHEV + CHEV + CHEV;
+  const grid = $('#demo');
+  grid.appendChild(wrap);
+  /* place the arrows between phone and context columns in demo layout */
+  const css = document.createElement('style');
+  css.textContent = '@media(min-width:1021px){body.mode-demo .stagegrid{grid-template-columns:auto auto minmax(0,.9fr)}body.mode-demo .stagegrid>.flow{grid-area:auto}body.mode-demo .context{grid-column:3}}';
+  document.head.appendChild(css);
+})();
+
+/* ----------------------- live context (app → rail) ----------------------- */
 const SCREENS = {
   loading:        { t:'Starting up', n:'MindRoot is loading — everything here runs entirely in your browser, on this page.' },
   welcome:        { t:'The welcome screen', n:'Setup takes about three minutes: language, a name, then the family records five short phrases. In a hurry? Tap “Just exploring? Skip setup” in the phone.' },
@@ -428,6 +452,7 @@ function resetDemo(){
   } catch (e) { /* cross-origin or not yet loaded — a plain reload still helps */ }
   frame.src = CONFIG.APP_URL;
 }
+$('#restart').addEventListener('click', resetDemo);
 </script>
 </body>
 </html>
