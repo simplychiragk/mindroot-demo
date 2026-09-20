@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MindRoot · Live demo for Smart India Hackathon 2026</title>
+<title>MindRoot · Live demo</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23fdf9f3'/%3E%3Ccircle cx='50' cy='50' r='40' fill='%239f3c16'/%3E%3Cpath d='M50 78 L50 46' stroke='%23ffdbcf' stroke-width='6' stroke-linecap='round'/%3E%3Cellipse cx='34' cy='38' rx='16' ry='8.5' fill='%23fffbff' transform='rotate(-42 34 38)'/%3E%3Cellipse cx='66' cy='38' rx='16' ry='8.5' fill='%23fffbff' transform='rotate(42 66 38)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -224,7 +224,7 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
     <nav aria-label="Page sections">
       <a href="#top" id="navOverview">Overview</a>
       <a href="#demo" id="navDemo">Live demo</a>
-      <a href="#coverage">Coverage</a>
+      <a href="#coverage">Features</a>
     </nav>
   </div>
 </header>
@@ -310,8 +310,7 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
 <section class="band" id="coverage">
   <div class="wrap">
     <div class="sec-head">
-      <h2>What the problem statement asked for, and where to see it</h2>
-      <p>Smart India Hackathon 2026, Problem Statement SIH26003, Ministry of Development of North Eastern Region.</p>
+      <h2>What MindRoot does, and where to see it</h2>
     </div>
     <div class="cov">
       <div class="cov-row"><h3>Adaptive cognitive activities</h3><p>Seven activities covering memory, attention, daily-routine recall and pattern recognition, with five difficulty levels that adapt to the player. The Evening Echo check-in closes each day.</p><span class="chip live">Live in the demo</span></div>
@@ -330,8 +329,7 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
 
 <footer>
   <div class="foot">
-    <span>Built for Smart India Hackathon 2026, Problem Statement SIH26003, Ministry of Development of North Eastern Region.</span>
-    <span id="teamLine"></span>
+    <span>MindRoot · With you. Always.</span>
   </div>
 </footer>
 
@@ -340,8 +338,7 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
    CONFIG — the phone iframes the real MindRoot web build (same origin).
 ------------------------------------------------------------------- */
 const CONFIG = {
-  APP_URL: "./app/",
-  TEAM_NAME: "BinaryBros · Team 136671"
+  APP_URL: "./app/"
 };
 
 const APP_W = 390;
@@ -356,7 +353,6 @@ new ResizeObserver(fit).observe(screenEl); fit();
 /* ----------------------- iframe ----------------------- */
 const frame = $('#appframe');
 frame.src = CONFIG.APP_URL;
-if (CONFIG.TEAM_NAME) $('#teamLine').textContent = 'Built by ' + CONFIG.TEAM_NAME;
 
 /* ----------------------- two-phase layout ----------------------- */
 const body = document.body;
