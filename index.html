@@ -234,7 +234,7 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
 
   <div class="intro">
     <h1>Dementia care that <em>never leaves the phone.</em></h1>
-    <p class="lede">MindRoot is a memory-care companion for older adults in North East India: culturally familiar games, an on-device AI that notices decline early across eight cognitive domains, and every instruction spoken in the family's own voice.</p>
+    <p class="lede">MindRoot is a memory-care companion for older adults in North East India: seven adaptive cognitive activities, an on-device AI that notices decline early, and every instruction spoken in the family's own voice.</p>
 
     <div class="features">
       <div class="feature-main">
@@ -314,10 +314,10 @@ footer .foot{max-width:1360px;margin:0 auto;padding:26px clamp(20px,4vw,48px) 34
       <p>Smart India Hackathon 2026, Problem Statement SIH26003, Ministry of Development of North Eastern Region.</p>
     </div>
     <div class="cov">
-      <div class="cov-row"><h3>Interactive cognitive games</h3><p>Seven games covering memory, attention, pattern recognition, routine recall, reaction speed and matching, plus the Evening Echo daily check-in as an eighth measured domain.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>Adaptive cognitive activities</h3><p>Seven activities covering memory, attention, daily-routine recall and pattern recognition, with five difficulty levels that adapt to the player. The Evening Echo check-in closes each day.</p><span class="chip live">Live in the demo</span></div>
       <div class="cov-row"><h3>Adaptive difficulty</h3><p>Five levels that adjust to accuracy. Each session picks the three games the player needs most.</p><span class="chip live">Live in the demo</span></div>
-      <div class="cov-row"><h3>Caregiver dashboard</h3><p>Trends, per-domain analysis and declining-performance alerts.</p><span class="chip live">Live in the demo</span></div>
-      <div class="cov-row"><h3>AI analysis</h3><p>On-device InceptionTime models (ONNX) read each session and return an overall state with per-domain insight, with no server involved.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>Caregiver dashboard</h3><p>Trends, per-activity analysis and declining-performance alerts.</p><span class="chip live">Live in the demo</span></div>
+      <div class="cov-row"><h3>AI analysis</h3><p>On-device InceptionTime models (ONNX) read each session and return an overall state with per-activity insight, with no server involved.</p><span class="chip live">Live in the demo</span></div>
       <div class="cov-row"><h3>Reminders</h3><p>Medicine, hydration and appointment reminders scheduled on-device, announced in the family's language.</p><span class="chip app">In the mobile app</span></div>
       <div class="cov-row"><h3>Voice input &amp; speech</h3><p>Ask the care co-pilot by voice with on-device speech recognition, and hear every reply spoken back.</p><span class="chip app">In the mobile app</span></div>
       <div class="cov-row"><h3>Elderly-friendly design</h3><p>Oversized controls, haptic feedback and spoken instructions on the device.</p><span class="chip app">In the mobile app</span></div>
@@ -428,11 +428,11 @@ const SCREENS = {
   handOver:       { t:'The handover', do:'Tap “Hand over to patient”.', why:'Setup done. Patient mode keeps everything simple and calm from here.' },
   patientHome:    { t:'The patient’s home', do:'Tap the big ▶ Play button.', why:'This is the elder’s everyday screen: one giant button, today’s plan with gentle medicine and water reminders, zero clutter.' },
   session:        { t:'A game session', do:'Play the game shown. Tap big buttons, no rush.', why:'Three games picked for the player. Instructions are spoken aloud, and there are deliberately no timers or scores.' },
-  analysis:       { t:'On-device analysis', do:'Watch the thinking screen for a moment.', why:'ONNX machine-learning models running on the phone itself read the session and score eight cognitive domains. No server, no internet needed.' },
+  analysis:       { t:'On-device analysis', do:'Watch the thinking screen for a moment.', why:'ONNX machine-learning models running on the phone itself read the session and score the activities. No server, no internet needed.' },
   echoSet:        { t:'Setting the day plan', do:'Add anchors with a time if you like.', why:'Medicines, walks, water. Timed anchors remind automatically, fully offline.' },
   echoCheck:      { t:'Evening Echo', do:'Answer honestly, either answer is alright.', why:'In the evening the app kindly asks whether today’s plan happened. A “no” is never a failure: it loops gently and moves on.' },
   caregiverGate:  { t:'The caregiver PIN', do:'Dial 1 · 2 · 3 · 4 on the keypad.', why:'Families unlock their view with a PIN so the elder never stumbles into settings.' },
-  caregiverHub:   { t:'The caregiver hub', do:'Scroll the trends, then open the co-pilot.', why:'Two weeks of sample history: trends, per-domain strengths, a decline alert, and an AI co-pilot that answers care questions in plain words.' },
+  caregiverHub:   { t:'The caregiver hub', do:'Scroll the trends, then open the co-pilot.', why:'Two weeks of sample history: trends, per-activity strengths, a decline alert, and an AI co-pilot that answers care questions in plain words.' },
 };
 const liveTitle = $('#liveTitle'), liveDo = $('#liveDo'), liveNote = $('#liveNote'), liveCard = $('#liveCard');
 window.addEventListener('message', (e) => {
