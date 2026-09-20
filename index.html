@@ -121,6 +121,14 @@ button{font:inherit;color:inherit}
 .sample{margin-top:8px;padding:16px 18px;border-radius:4px 16px 4px 16px;background:var(--gold-soft);color:var(--gold-ink);font-size:15.5px;border-left:5px solid var(--gold)}
 .sample b{display:block;margin-bottom:2px}
 
+/* live "you're looking at" card — follows the screen shown in the phone */
+.live{margin-top:16px;padding:16px 18px;border-radius:4px 16px 4px 16px;background:var(--gold-soft);color:var(--gold-ink);border-left:5px solid var(--gold)}
+.live .live-kicker{font:700 12.5px var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.75;margin-bottom:4px}
+.live h3{font-size:19px;margin-bottom:4px}
+.live p{font-size:15.5px;line-height:1.5}
+.live.flash{animation:liveflash .5s ease}
+@keyframes liveflash{0%{transform:scale(.985)}60%{transform:scale(1.008)}100%{transform:scale(1)}}
+
 /* ------------------------------ phone ------------------------------ */
 .col-phone{
   --sh:clamp(470px,min(calc(100dvh - 210px),calc((100vw - 56px)*2.164)),800px);
@@ -272,6 +280,11 @@ footer .foot{max-width:1360px;margin:0 auto;padding:28px clamp(20px,4vw,48px) 36
 
   <aside class="notes" aria-label="What to notice">
     <h2>What to notice</h2>
+    <div class="live" id="liveCard">
+      <div class="live-kicker">You're looking at</div>
+      <h3 id="liveTitle">The welcome screen</h3>
+      <p id="liveNote">Setup takes about three minutes: language, a name, then the family records five short phrases. In a hurry? Tap “Just exploring? Skip setup” in the phone.</p>
+    </div>
     <div class="note">
       <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></span>
       <div><h3>Built for older hands</h3><p>Large tap targets, high contrast and calm colours. No small buttons, no clutter.</p></div>
@@ -368,6 +381,40 @@ $('#next').addEventListener('click', () => {
 });
 $('#reload').addEventListener('click', () => { resetDemo(); setStep(0); });
 setStep(0);
+
+/* ------- live context: the app announces its screen; this rail explains it -------
+   (the app posts {type:'mindroot:screen', screen} to the parent on every route
+   change — web only; native is untouched) */
+const SCREENS = {
+  loading:        { t:'Starting up', n:'MindRoot is loading — everything here runs entirely in your browser, on this page.' },
+  welcome:        { t:'The welcome screen', n:'Setup takes about three minutes: language, a name, then the family records five short phrases. In a hurry? Tap “Just exploring? Skip setup” in the phone.' },
+  language:       { t:'Choosing a language', n:'English, Hindi, Assamese, Bengali or Nepali — the whole app, voice included, switches instantly.' },
+  name:           { t:'Adding a name', n:'The app addresses the elder by name, spoken aloud in the family\u2019s voice.' },
+  voiceIntro:     { t:'Why record a voice?', n:'This is the heart of MindRoot: the family records five short phrases — greetings and game instructions — so every session is guided by a voice the elder knows and loves.' },
+  recordPractice: { t:'Voice practice', n:'One trial recording first, so whoever records knows exactly what to expect.' },
+  recordQueue:    { t:'Recording the 5 phrases', n:'Five phrases, one at a time, about a minute. The recordings never leave this device — nothing is uploaded.' },
+  rehearsal:      { t:'Hear it back', n:'The recorded voice plays the phrases back before the handover.' },
+  handOver:       { t:'The handover', n:'Setup done — the phone is handed to the elder. Patient mode keeps everything simple and calm from here.' },
+  patientHome:    { t:'The patient\u2019s home', n:'One giant Play button, today\u2019s plan with gentle medicine and water reminders, zero clutter. This is the elder\u2019s everyday screen.' },
+  session:        { t:'A game session', n:'Three games picked for the player. Instructions are spoken aloud; there are no timers and no scores — on purpose.' },
+  analysis:       { t:'On-device analysis', n:'ONNX machine-learning models running on the phone itself read the session and score eight cognitive domains. No server, no internet needed.' },
+  echoSet:        { t:'Setting the day plan', n:'The caregiver sets 2–5 anchors for today — medicines, walks, water. Timed anchors remind automatically, fully offline.' },
+  echoCheck:      { t:'Evening Echo', n:'In the evening the app kindly asks whether today\u2019s plan happened. A “no” is never a failure — it loops gently and moves on.' },
+  caregiverGate:  { t:'The caregiver PIN', n:'Families unlock their view with a PIN — for the demo it\u2019s 1·2·3·4.' },
+  caregiverHub:   { t:'The caregiver hub', n:'Two weeks of sample history: trends, per-domain strengths, a decline alert, and the AI care co-pilot that answers questions in plain words.' },
+};
+const liveTitle = $('#liveTitle'), liveNote = $('#liveNote'), liveCard = $('#liveCard');
+window.addEventListener('message', (e) => {
+  const d = e.data;
+  if (!d || d.type !== 'mindroot:screen') return;
+  const info = SCREENS[d.screen];
+  if (!info) return;
+  liveTitle.textContent = info.t;
+  liveNote.textContent = info.n;
+  liveCard.classList.remove('flash');
+  void liveCard.offsetWidth;
+  liveCard.classList.add('flash');
+});
 
 /* ----------------------- restart: wipe the app's demo storage (same-origin) ----------------------- */
 function resetDemo(){
