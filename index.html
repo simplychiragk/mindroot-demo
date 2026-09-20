@@ -66,37 +66,29 @@ body.mode-demo #navDemo{display:none}
 @media (max-width:640px){.top nav a:not(:first-child){display:none}body.mode-demo .top nav a:first-child{display:inline-block}}
 
 /* ------------------------------ stage grid ------------------------------ */
+/* Flexbox, not named grid areas: each phase shows exactly the pieces it
+   needs and hard-hides the rest — overlapping ghost cells are impossible. */
 .stagegrid{
   max-width:1360px;margin:0 auto;padding:36px clamp(20px,4vw,48px) 72px;
-  display:grid;column-gap:clamp(28px,4vw,64px);row-gap:32px;align-items:center;
-  grid-template-columns:minmax(0,1.05fr) auto;
-  grid-template-areas:"intro phone";
+  display:flex;align-items:center;gap:clamp(28px,4vw,64px);
 }
-body.mode-demo .stagegrid{
-  grid-template-columns:auto minmax(0,.92fr);
-  grid-template-areas:"phone context";
-  align-items:start;
-}
-.intro{grid-area:intro;transition:opacity .45s ease,transform .45s ease}
-.col-phone{grid-area:phone}
-.context{grid-area:context;transition:opacity .5s ease .12s,transform .5s ease .12s}
+body.mode-demo .stagegrid{align-items:flex-start}
+.intro{flex:1 1 auto;min-width:0;transition:opacity .45s ease,transform .45s ease}
+.col-phone{flex:0 0 auto}
+.context{flex:1 1 auto;min-width:0;transition:opacity .5s ease .12s,transform .5s ease .12s}
 
-/* overview: context hidden */
-body.mode-overview .context{opacity:0;transform:translateX(28px);pointer-events:none;visibility:hidden}
-/* demo: intro gone */
-body.mode-demo .intro{opacity:0;transform:translateY(-14px);pointer-events:none;position:static;max-height:0;overflow:hidden;padding:0;margin:0;visibility:hidden}
-/* arrows only in demo */
-.flow{opacity:0;transition:opacity .5s ease .3s}
-body.mode-demo .flow{opacity:1}
+/* overview: context hidden; phone not sticky yet */
+body.mode-overview .context{display:none}
+body.mode-overview .flow{display:none}
+/* demo: intro gone, phone glides left, context + arrows in */
+body.mode-demo .intro{display:none}
 
 @media (max-width:1020px){
-  .stagegrid,body.mode-demo .stagegrid{
-    grid-template-columns:minmax(0,1fr);
-    grid-template-areas:"intro" "phone" "context";
-    justify-items:center;
-  }
+  .stagegrid{flex-direction:column;align-items:center}
+  body.mode-demo .stagegrid{align-items:center}
   body.mode-demo .intro{display:none}
   .flow{display:none}
+  .context{width:100%;max-width:560px}
 }
 
 /* ------------------------------ overview intro ------------------------------ */
@@ -156,7 +148,7 @@ body.mode-overview .col-phone{position:relative;top:0}
 .utility button:hover,.utility a:hover{color:var(--ink)}
 
 /* ------------------------------ flow arrows (desc → phone) ------------------------------ */
-.flow{grid-area:context;justify-self:start;align-self:center;display:flex;flex-direction:column;gap:10px;margin-right:6px}
+.flow{display:flex;flex-direction:column;gap:10px;align-self:center;flex:0 0 auto}
 .flow .fl{width:64px;height:26px;opacity:.25;transform:translateX(10px);animation:flowleft 1.5s ease-in-out infinite}
 .flow .fl:nth-child(2){animation-delay:.22s}
 .flow .fl:nth-child(3){animation-delay:.44s}
@@ -400,12 +392,9 @@ $('#navOverview').addEventListener('click', (e) => { e.preventDefault(); setMode
   wrap.className = 'flow';
   wrap.setAttribute('aria-hidden', 'true');
   wrap.innerHTML = '<span class="cap">watch the phone</span>' + CHEV + CHEV + CHEV;
-  const grid = $('#demo');
-  grid.appendChild(wrap);
-  /* place the arrows between phone and context columns in demo layout */
-  const css = document.createElement('style');
-  css.textContent = '@media(min-width:1021px){body.mode-demo .stagegrid{grid-template-columns:auto auto minmax(0,.9fr)}body.mode-demo .stagegrid>.flow{grid-area:auto}body.mode-demo .context{grid-column:3}}';
-  document.head.appendChild(css);
+  /* arrows sit between phone and context in demo mode; flex order does the rest */
+  const context = $('#contextCol');
+  context.parentNode.insertBefore(wrap, context);
 })();
 
 /* ----------------------- live context (app → rail) ----------------------- */
