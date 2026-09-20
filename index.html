@@ -250,8 +250,8 @@ footer .foot{max-width:1360px;margin:0 auto;padding:28px clamp(20px,4vw,48px) 36
       <div class="phone">
         <i class="b b1"></i><i class="b b2"></i><i class="b b3"></i><i class="b b4"></i>
         <div class="screen" id="screen">
-          <div class="island"></div>
-          <div class="homebar"></div>
+          <!-- No fake island/homebar: the REAL app draws from the iframe's very
+               top, and overlaid chrome collides with its header. -->
           <div class="viewport" id="viewport">
             <iframe id="appframe" title="MindRoot app demo" allow="autoplay; fullscreen; microphone" referrerpolicy="no-referrer"></iframe>
           </div>
